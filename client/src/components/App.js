@@ -18,15 +18,31 @@ class App extends Component {
       <BrowserRouter>
         <div className="container">
           <Header />
-          <Route path="/" exact component={Landing} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route
+            path="/"
+            exact
+            component={() => {
+              switch (this.props.auth) {
+                case null:
+                  return null;
+                case false:
+                  return <Landing />;
+                default:
+                  return <Dashboard />;
+              }
+            }}
+          />
         </div>
       </BrowserRouter>
     );
   }
 }
 
+const mapStateToProps = ({ auth }) => {
+  return { auth };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   actions
 )(App);

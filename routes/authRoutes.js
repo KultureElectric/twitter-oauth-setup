@@ -7,7 +7,7 @@ module.exports = function(app) {
     "/auth/twitter/callback",
     passport.authenticate("twitter"),
     (res, req) => {
-      req.redirect("http://localhost:3000/dashboard");
+      req.redirect("http://localhost:3000/");
     }
   );
 
