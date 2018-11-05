@@ -2,6 +2,8 @@ const express = require("express");
 const passport = require("passport");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const cookieSession = require("cookie-session");
+const keys = require("./config/keys");
 require("./models/userModel");
 require("./services/passport");
 
@@ -16,10 +18,15 @@ db.once("open", function() {
 const app = express();
 
 app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [keys.CookieKey]
+  })
+);
+
+app.use(
   session({
     secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
     maxAge: 30 * 24 * 60 * 60 * 60 * 1000
   })
 );
